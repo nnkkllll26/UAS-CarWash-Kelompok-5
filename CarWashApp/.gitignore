@@ -1,0 +1,20 @@
+# Tugas P10 sampai P13 (dikumpulkan terpisah, tidak ditampilkan di GitHub)
+_tugas-lokal/
+
+# Java
+*.class
+*.log
+out/
+bin/
+target/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kredensial database lokal
+config.properties
