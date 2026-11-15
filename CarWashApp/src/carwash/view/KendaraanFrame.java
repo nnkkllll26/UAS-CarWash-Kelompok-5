@@ -1,5 +1,6 @@
 package carwash.view;
 
+import carwash.config.DatabaseConnection;
 import carwash.dao.KendaraanDAO;
 import carwash.dao.PelangganDAO;
 import carwash.exception.DataTidakValidException;
@@ -28,6 +29,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -61,6 +64,14 @@ public class KendaraanFrame extends JFrame implements ActionListener {
         setSize(860, 560);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
+
+        // Menutup koneksi database saat jendela ditutup lewat tombol X
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                DatabaseConnection.tutup();
+            }
+        });
 
         add(buatPanelAtas(), BorderLayout.NORTH);
         add(buatPanelTengah(), BorderLayout.CENTER);

@@ -10,6 +10,7 @@ Penyusun: Nikel Pancaran Suryaman (NIM 2510631250042)
 ```
 CarWashApp/
 ├── src/carwash/
+│   ├── exception/    exception khusus (DataTidakValidException)
 │   ├── model/        kelas model (encapsulation)
 │   ├── dao/          akses data ke database (JDBC)
 │   ├── view/         tampilan Java Swing
@@ -36,8 +37,21 @@ CarWashApp/
 2. Import skrip SQL dari folder `database/`.
 3. Tambahkan file .jar dari `lib/` ke Referenced Libraries di VS Code.
 4. Sesuaikan URL, user, dan password pada class koneksi.
-5. Jalankan class utama pada `src/carwash/view/`.
+5. Jalankan class utama `carwash.view.MenuUtama` (source root = folder `src`).
+
+Lewat terminal (dari folder CarWashApp, Linux/macOS, di Windows ganti `:` dengan `;`):
+
+```
+javac -d out $(find src -name '*.java')
+java -cp "out:lib/*" carwash.view.MenuUtama
+```
 
 ## Fitur
 
-Akan diisi setelah tahap perancangan difinalkan.
+| Fitur | Status |
+|---|---|
+| Menu utama dan cek koneksi database | Selesai |
+| Data kendaraan (tambah, ubah, hapus, cari) | Selesai |
+| Data pelanggan | Dalam pengerjaan |
+| Paket cuci (harga dan durasi per jenis kendaraan) | Model dan DAO selesai, tampilan belum |
+| Antrean dan transaksi (proses, selesai, batal, struk) | Model dan DAO selesai, tampilan belum |

@@ -1,9 +1,10 @@
-package model;
+package carwash.model;
 
-import exception.DataTidakValidException;
+import carwash.exception.DataTidakValidException;
 
 public class CuciHydraulic extends PaketCuci {
-    private static final double BIAYA_STEAM = 10000;
+    // Biaya tambahan pemakaian hydraulic lift (rupiah, flat)
+    private static final double BIAYA_HYDRAULIC = 10000;
 
     public CuciHydraulic(int id, String kode, String nama, double harga, int durasi, String material)
             throws DataTidakValidException {
@@ -12,12 +13,7 @@ public class CuciHydraulic extends PaketCuci {
 
     @Override
     public double hitungHarga(JenisKendaraan jenis) {
-        return getHargaDasar() * jenis.getFaktorHarga() + BIAYA_STEAM;
-    }
-
-    @Override
-    public int hitungDurasi(JenisKendaraan jenis) {
-        return (int) Math.round(getDurasiDasar() * jenis.getFaktorDurasi());
+        return getHargaDasar() * jenis.getFaktorHarga() + BIAYA_HYDRAULIC;
     }
 
     @Override

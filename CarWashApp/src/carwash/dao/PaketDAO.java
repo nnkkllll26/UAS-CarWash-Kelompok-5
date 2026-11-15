@@ -1,18 +1,18 @@
-package dao;
+package carwash.dao;
 
-import config.DatabaseConnection;
-import exception.DataTidakValidException;
+import carwash.config.DatabaseConnection;
+import carwash.exception.DataTidakValidException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.CuciHydraulic;
-import model.CuciReguler;
-import model.NanoCoating;
-import model.PaketCuci;
+import carwash.model.CuciHydraulic;
+import carwash.model.CuciReguler;
+import carwash.model.NanoCoating;
+import carwash.model.PaketCuci;
 
-public class PaketDAO{
+public class PaketDAO {
 
     /** Baris tabel dipetakan ke subclass yang sesuai (inheritance + polymorphism). */
     public List<PaketCuci> semua() throws SQLException {

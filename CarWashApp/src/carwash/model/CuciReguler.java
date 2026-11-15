@@ -1,6 +1,6 @@
-package model;
+package carwash.model;
 
-import exception.DataTidakValidException;
+import carwash.exception.DataTidakValidException;
 
 public class CuciReguler extends PaketCuci {
     public CuciReguler(int id, String kode, String nama, double harga, int durasi, String material)
@@ -11,11 +11,6 @@ public class CuciReguler extends PaketCuci {
     @Override
     public double hitungHarga(JenisKendaraan jenis) {
         return getHargaDasar() * jenis.getFaktorHarga();
-    }
-
-    @Override
-    public int hitungDurasi(JenisKendaraan jenis) {
-        return (int) Math.round(getDurasiDasar() * jenis.getFaktorDurasi());
     }
 
     @Override

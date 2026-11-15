@@ -1,15 +1,15 @@
-package dao;
+package carwash.dao;
 
-import config.DatabaseConnection;
-import exception.DataTidakValidException;
+import carwash.config.DatabaseConnection;
+import carwash.exception.DataTidakValidException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Spesialisasi;
-import model.StatusWasher;
-import model.Washer;
+import carwash.model.Spesialisasi;
+import carwash.model.StatusWasher;
+import carwash.model.Washer;
 
 public class WasherDAO {
 
@@ -23,7 +23,7 @@ public class WasherDAO {
                     hasil.add(new Washer(rs.getInt("id_washer"), rs.getString("nama"), rs.getString("no_hp"),
                             Spesialisasi.valueOf(rs.getString("spesialisasi")),
                             StatusWasher.valueOf(rs.getString("status"))));
-                } catch (DataTidakValidException e) {
+                } catch (DataTidakValidException | IllegalArgumentException e) {
                     throw new SQLException("Data washer di database tidak valid: " + e.getMessage(), e);
                 }
             }

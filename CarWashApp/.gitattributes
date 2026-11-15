@@ -1,0 +1,5 @@
+# Seragamkan akhir baris agar git tidak menandai file berubah hanya karena CRLF vs LF
+* text=auto eol=lf
+*.java text eol=lf
+*.sql text eol=lf
+*.md text eol=lf

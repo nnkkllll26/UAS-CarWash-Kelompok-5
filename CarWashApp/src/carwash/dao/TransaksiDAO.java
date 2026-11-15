@@ -1,6 +1,6 @@
-package dao;
+package carwash.dao;
 
-import config.DatabaseConnection;
+import carwash.config.DatabaseConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import model.Kendaraan;
-import model.PaketCuci;
-import model.StatusAntrean;
-import model.Transaksi;
-import model.Washer;
+import carwash.model.Kendaraan;
+import carwash.model.PaketCuci;
+import carwash.model.StatusAntrean;
+import carwash.model.Transaksi;
+import carwash.model.Washer;
 
 public class TransaksiDAO {
 
@@ -29,9 +29,15 @@ public class TransaksiDAO {
             while (rs.next()) {
                 int idWasher = rs.getInt("id_washer");
                 Washer washer = rs.wasNull() ? null : washerById.get(idWasher);
+                StatusAntrean status;
+                try {
+                    status = StatusAntrean.valueOf(rs.getString("status"));
+                } catch (IllegalArgumentException e) {
+                    throw new SQLException("Status transaksi di database tidak dikenal: " + rs.getString("status"), e);
+                }
                 hasil.add(new Transaksi(rs.getInt("id_transaksi"), rs.getString("no_antrean"),
                         kendaraanById.get(rs.getInt("id_kendaraan")), paketById.get(rs.getInt("id_paket")),
-                        washer, StatusAntrean.valueOf(rs.getString("status")),
+                        washer, status,
                         ambil(rs.getTimestamp("waktu_masuk")), ambil(rs.getTimestamp("estimasi_selesai")),
                         ambil(rs.getTimestamp("waktu_selesai")), rs.getDouble("total_harga")));
             }
@@ -45,7 +51,7 @@ public class TransaksiDAO {
                 + "waktu_masuk, estimasi_selesai, waktu_selesai, total_harga) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = DatabaseConnection.getConnection()
                 .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            isiParameter(ps, t, true);
+            isiParameter(ps, t);
             ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) {
@@ -82,7 +88,7 @@ public class TransaksiDAO {
         }
     }
 
-    private void isiParameter(PreparedStatement ps, Transaksi t, boolean baru) throws SQLException {
+    private void isiParameter(PreparedStatement ps, Transaksi t) throws SQLException {
         ps.setString(1, t.getNoAntrean());
         ps.setInt(2, t.getKendaraan().getId());
         ps.setInt(3, t.getPaket().getId());

@@ -1,4 +1,4 @@
-package model;
+package carwash.model;
 
 public enum JenisKendaraan {
     MOTOR(0.5, 0.5),

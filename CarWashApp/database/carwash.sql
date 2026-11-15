@@ -2,6 +2,8 @@
 -- Database CarWashApp (UAS PBO SYS61516)
 -- Disusun mengikuti query pada kelas DAO tim:
 -- pelanggan, kendaraan, paket_cuci, washer, transaksi
+-- PERINGATAN: skrip ini menghapus lalu membuat ulang semua tabel,
+-- jadi data lama di carwash_db akan hilang setiap kali diimpor.
 -- =====================================================
 
 CREATE DATABASE IF NOT EXISTS carwash_db
@@ -13,7 +15,6 @@ DROP TABLE IF EXISTS washer;
 DROP TABLE IF EXISTS paket_cuci;
 DROP TABLE IF EXISTS kendaraan;
 DROP TABLE IF EXISTS pelanggan;
-DROP TABLE IF EXISTS layanan; -- sisa dari versi skrip sebelumnya
 
 CREATE TABLE pelanggan (
   id_pelanggan INT AUTO_INCREMENT PRIMARY KEY,
@@ -42,8 +43,9 @@ CREATE TABLE paket_cuci (
   material     VARCHAR(100) NULL
 ) ENGINE=InnoDB;
 
--- Kolom spesialisasi dan status memakai VARCHAR karena isi enum
--- Spesialisasi dan StatusWasher mengikuti kelas model buatan anggota tim
+-- Kolom spesialisasi dan status menyimpan nama enum Java:
+-- spesialisasi: UMUM, HYDRAULIC, DETAILING
+-- status      : TERSEDIA, BEKERJA, LIBUR
 CREATE TABLE washer (
   id_washer    INT AUTO_INCREMENT PRIMARY KEY,
   nama         VARCHAR(100) NOT NULL,
@@ -54,11 +56,11 @@ CREATE TABLE washer (
 
 CREATE TABLE transaksi (
   id_transaksi     INT AUTO_INCREMENT PRIMARY KEY,
-  no_antrean       VARCHAR(20) NOT NULL,
+  no_antrean       VARCHAR(20) NOT NULL UNIQUE,
   id_kendaraan     INT NOT NULL,
   id_paket         INT NOT NULL,
   id_washer        INT NULL,
-  status           VARCHAR(30) NOT NULL,  -- nama enum StatusAntrean
+  status           VARCHAR(30) NOT NULL,  -- MENUNGGU, DIPROSES, SELESAI, DIBATALKAN
   waktu_masuk      DATETIME NOT NULL,
   estimasi_selesai DATETIME NULL,
   waktu_selesai    DATETIME NULL,
@@ -88,7 +90,17 @@ INSERT INTO paket_cuci (kode_paket, nama_paket, tipe_paket, harga_dasar, durasi_
 ('PKT-HYD',  'Cuci Hydraulic', 'HYDRAULIC', 75000,  45, 'Hydraulic lift dan sabun salju'),
 ('PKT-NANO', 'Nano Coating',   'NANO',      300000, 120, 'Cairan nano ceramic');
 
--- Data washer dan transaksi sengaja belum diisi.
--- Isi setelah nilai enum Spesialisasi, StatusWasher, dan StatusAntrean
--- dari anggota tim terkonfirmasi, contohnya:
--- INSERT INTO washer (nama, no_hp, spesialisasi, status) VALUES ('Nama', '08xxxxxxxxxx', 'NILAI_ENUM', 'NILAI_ENUM');
+INSERT INTO washer (nama, no_hp, spesialisasi, status) VALUES
+('Rudi Hartono',  '081200000001', 'UMUM',      'TERSEDIA'),
+('Dimas Saputra', '081200000002', 'HYDRAULIC', 'BEKERJA'),
+('Eko Prasetyo',  NULL,           'DETAILING', 'LIBUR');
+
+-- Total harga mengikuti rumus model: harga dasar x faktor jenis (+ biaya hydraulic Rp 10.000)
+-- Avanza (MOBIL) + Reguler        = 50.000 x 1,0          = 50.000, 30 menit
+-- Honda Beat (MOTOR) + Hydraulic  = 75.000 x 0,5 + 10.000 = 47.500, 23 menit
+-- CR-V (SUV) + Nano Coating       = 300.000 x 1,3         = 390.000, 150 menit
+INSERT INTO transaksi (no_antrean, id_kendaraan, id_paket, id_washer, status,
+                       waktu_masuk, estimasi_selesai, waktu_selesai, total_harga) VALUES
+('CW-20261115-001', 1, 1, 1,    'SELESAI',  '2026-11-15 08:00:00', '2026-11-15 08:30:00', '2026-11-15 08:28:00', 50000),
+('CW-20261115-002', 2, 2, 2,    'DIPROSES', '2026-11-15 09:00:00', '2026-11-15 09:23:00', NULL,                  47500),
+('CW-20261115-003', 3, 3, NULL, 'MENUNGGU', '2026-11-15 09:10:00', '2026-11-15 11:40:00', NULL,                  390000);

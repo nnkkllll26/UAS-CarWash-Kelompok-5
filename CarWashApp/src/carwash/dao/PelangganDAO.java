@@ -1,14 +1,14 @@
-package dao;
+package carwash.dao;
 
-import config.DatabaseConnection;
-import exception.DataTidakValidException;
+import carwash.config.DatabaseConnection;
+import carwash.exception.DataTidakValidException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import model.Pelanggan;
+import carwash.model.Pelanggan;
 
 public class PelangganDAO {
 

@@ -1,8 +1,13 @@
-package model;
+package carwash.model;
 
-import exception.DataTidakValidException;
+import carwash.exception.DataTidakValidException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Kendaraan {
+    // Huruf wilayah, angka, huruf seri. Spasi diabaikan saat membaca lalu disusun ulang
+    private static final Pattern POLA_PLAT = Pattern.compile("([A-Z]{1,2})(\\d{1,4})([A-Z]{0,3})");
+
     private int id;
     private String platNomor;
     private String merk;
@@ -26,11 +31,13 @@ public class Kendaraan {
     public Pelanggan getPemilik() { return pemilik; }
 
     public void setPlatNomor(String plat) throws DataTidakValidException {
-        String p = plat == null ? "" : plat.trim().toUpperCase().replaceAll("\\s+", " ");
-        if (!p.matches("[A-Z]{1,2} ?\\d{1,4} ?[A-Z]{0,3}")) {
+        String bersih = plat == null ? "" : plat.toUpperCase().replaceAll("\\s+", "");
+        Matcher m = POLA_PLAT.matcher(bersih);
+        if (!m.matches()) {
             throw new DataTidakValidException("Format plat nomor tidak valid (contoh: B 1234 KRW)");
         }
-        this.platNomor = p;
+        // "B1234KRW" dan "B 1234 KRW" disimpan seragam sebagai "B 1234 KRW"
+        this.platNomor = m.group(1) + " " + m.group(2) + (m.group(3).isEmpty() ? "" : " " + m.group(3));
     }
 
     public void setMerk(String merk) throws DataTidakValidException {

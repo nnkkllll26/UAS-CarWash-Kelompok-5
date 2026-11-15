@@ -1,7 +1,7 @@
-package dao;
+package carwash.dao;
 
-import config.DatabaseConnection;
-import exception.DataTidakValidException;
+import carwash.config.DatabaseConnection;
+import carwash.exception.DataTidakValidException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,9 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import model.JenisKendaraan;
-import model.Kendaraan;
-import model.Pelanggan;
+import carwash.model.JenisKendaraan;
+import carwash.model.Kendaraan;
+import carwash.model.Pelanggan;
 
 public class KendaraanDAO {
 
@@ -25,7 +25,7 @@ public class KendaraanDAO {
                     hasil.add(new Kendaraan(rs.getInt("id_kendaraan"), rs.getString("plat_nomor"),
                             rs.getString("merk"), JenisKendaraan.valueOf(rs.getString("jenis")),
                             pelangganById.get(rs.getInt("id_pelanggan"))));
-                } catch (DataTidakValidException e) {
+                } catch (DataTidakValidException | IllegalArgumentException e) {
                     throw new SQLException("Data kendaraan di database tidak valid: " + e.getMessage(), e);
                 }
             }

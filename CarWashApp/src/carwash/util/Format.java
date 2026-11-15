@@ -1,4 +1,4 @@
-package util;
+package carwash.util;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
