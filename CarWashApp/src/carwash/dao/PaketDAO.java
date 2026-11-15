@@ -12,7 +12,7 @@ import model.CuciReguler;
 import model.NanoCoating;
 import model.PaketCuci;
 
-public class PaketDAO {
+public class PaketDAO{
 
     /** Baris tabel dipetakan ke subclass yang sesuai (inheritance + polymorphism). */
     public List<PaketCuci> semua() throws SQLException {
