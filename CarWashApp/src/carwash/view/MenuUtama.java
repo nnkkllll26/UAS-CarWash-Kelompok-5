@@ -93,8 +93,8 @@ public class MenuUtama extends JFrame implements ActionListener {
             // TODO anggota 2: ganti dengan new PaketFrame().setVisible(true); dispose();
             belumTersedia("Paket Cuci");
         } else if (sumber == btnTransaksi) {
-            // TODO anggota 3: ganti dengan new TransaksiFrame().setVisible(true); dispose();
-            belumTersedia("Antrean dan Transaksi");
+            new TransaksiFrame().setVisible(true);
+            dispose();
         } else if (sumber == btnKeluar) {
             int pilihan = JOptionPane.showConfirmDialog(this,
                     "Keluar dari aplikasi?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
