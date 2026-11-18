@@ -11,7 +11,7 @@ import java.sql.SQLException;
  */
 public final class DatabaseConnection {
     // Sesuaikan URL, username, dan password database (default XAMPP)
-    private static final String URL = "jdbc:mysql://localhost:3306/carwash_db";
+    private static final String URL = "jdbc:mysql://localhost/carwash_db";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
