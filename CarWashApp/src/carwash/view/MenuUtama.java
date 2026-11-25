@@ -26,7 +26,7 @@ import java.sql.SQLException;
  * Perpindahan frame memakai pola new Frame().setVisible(true) lalu dispose().
  */
 public class MenuUtama extends JFrame implements ActionListener {
-    private JButton btnPelanggan, btnKendaraan, btnPaket, btnTransaksi, btnKeluar;
+    private JButton btnPelanggan, btnKendaraan, btnPaket, btnTransaksi, btnLaporan, btnKeluar;
     private JLabel lblStatusDB;
 
     public MenuUtama() {
@@ -58,11 +58,12 @@ public class MenuUtama extends JFrame implements ActionListener {
         btnKendaraan = new JButton("Data Kendaraan");
         btnPaket = new JButton("Paket Cuci");
         btnTransaksi = new JButton("Antrean dan Transaksi");
+        btnLaporan = new JButton("Laporan Pendapatan");
         btnKeluar = new JButton("Keluar");
 
-        JPanel panelMenu = new JPanel(new GridLayout(5, 1, 0, 10));
+        JPanel panelMenu = new JPanel(new GridLayout(6, 1, 0, 10));
         panelMenu.setBorder(BorderFactory.createEmptyBorder(10, 60, 10, 60));
-        JButton[] semuaTombol = {btnPelanggan, btnKendaraan, btnPaket, btnTransaksi, btnKeluar};
+        JButton[] semuaTombol = {btnPelanggan, btnKendaraan, btnPaket,btnTransaksi, btnLaporan, btnKeluar};
         for (JButton tombol : semuaTombol) {
             tombol.addActionListener(this);
             panelMenu.add(tombol);
@@ -95,7 +96,10 @@ public class MenuUtama extends JFrame implements ActionListener {
         } else if (sumber == btnTransaksi) {
             new TransaksiFrame().setVisible(true);
             dispose();
-        } else if (sumber == btnKeluar) {
+        } else if (sumber == btnLaporan) {
+            new LaporanFrame().setVisible(true);
+            dispose(); 
+        }else if (sumber == btnKeluar) {
             int pilihan = JOptionPane.showConfirmDialog(this,
                     "Keluar dari aplikasi?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
             if (pilihan == JOptionPane.YES_OPTION) {
