@@ -89,9 +89,9 @@ public class MenuUtama extends JFrame implements ActionListener {
         } else if (sumber == btnPelanggan) {
     new PelangganFrame().setVisible(true);
     dispose();
-        } else if (sumber == btnPaket) {
-            // TODO anggota 2: ganti dengan new PaketFrame().setVisible(true); dispose();
-            belumTersedia("Paket Cuci");
+       } else if (sumber == btnPaket) {
+    new PaketFrame().setVisible(true);
+    dispose();
         } else if (sumber == btnTransaksi) {
             new TransaksiFrame().setVisible(true);
             dispose();
