@@ -61,6 +61,20 @@ public class TransaksiDAO {
         }
     }
 
+    /** Menghitung nomor antrean berikutnya (A001, A002, ...) dari nomor terbesar yang tersimpan di database. */
+    public String nomorAntreanBerikut() throws SQLException {
+        String sql = "SELECT MAX(CAST(SUBSTRING(no_antrean, 2) AS UNSIGNED)) FROM transaksi "
+                + "WHERE no_antrean REGEXP '^A[0-9]+$'";
+        int terakhir = 0;
+        try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                terakhir = rs.getInt(1); // NULL (belum ada data) terbaca sebagai 0
+            }
+        }
+        return String.format("A%03d", terakhir + 1);
+    }
+
     /** UPDATE: memperbarui status, washer, dan estimasi. */
     public void perbarui(Transaksi t) throws SQLException {
         String sql = "UPDATE transaksi SET id_washer = ?, status = ?, estimasi_selesai = ?, waktu_selesai = ? "

@@ -3,7 +3,11 @@
 Sistem Manajemen Car Wash dan Auto Detailing berbasis Java Swing dan MySQL.
 Proyek UAS Pemrograman Berorientasi Objek (SYS61516), Fakultas Ilmu Komputer, Universitas Singaperbangsa Karawang.
 
-Penyusun: Nikel Pancaran Suryaman (NIM 2510631250042)
+Penyusun: 
+Nikel Pancaran Suryaman (NIM 2510631250042)
+Audryan Nafil (2510631250027)
+Gathan Abramovic (2510631250063)
+
 
 ## Struktur Repository
 
@@ -54,4 +58,5 @@ java -cp "out:lib/*" carwash.view.MenuUtama
 | Data kendaraan (tambah, ubah, hapus, cari) | Selesai |
 | Data pelanggan | Dalam pengerjaan |
 | Paket cuci (harga dan durasi per jenis kendaraan) | Model dan DAO selesai, tampilan belum |
-| Antrean dan transaksi (proses, selesai, batal, struk) | Model dan DAO selesai, tampilan belum |
+| Antrean dan transaksi (proses, selesai, batal) | Model, DAO, dan tampilan selesai |
+| Cetak struk transaksi ke PDF (kertas struk 80 mm) | Selesai |

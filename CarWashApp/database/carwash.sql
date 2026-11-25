@@ -101,6 +101,6 @@ INSERT INTO washer (nama, no_hp, spesialisasi, status) VALUES
 -- CR-V (SUV) + Nano Coating       = 300.000 x 1,3         = 390.000, 150 menit
 INSERT INTO transaksi (no_antrean, id_kendaraan, id_paket, id_washer, status,
                        waktu_masuk, estimasi_selesai, waktu_selesai, total_harga) VALUES
-('CW-20261115-001', 1, 1, 1,    'SELESAI',  '2026-11-15 08:00:00', '2026-11-15 08:30:00', '2026-11-15 08:28:00', 50000),
-('CW-20261115-002', 2, 2, 2,    'DIPROSES', '2026-11-15 09:00:00', '2026-11-15 09:23:00', NULL,                  47500),
-('CW-20261115-003', 3, 3, NULL, 'MENUNGGU', '2026-11-15 09:10:00', '2026-11-15 11:40:00', NULL,                  390000);
+('A001', 1, 1, 1,    'SELESAI',  '2026-11-15 08:00:00', '2026-11-15 08:30:00', '2026-11-15 08:28:00', 50000),
+('A002', 2, 2, 2,    'DIPROSES', '2026-11-15 09:00:00', '2026-11-15 09:23:00', NULL,                  47500),
+('A003', 3, 3, NULL, 'MENUNGGU', '2026-11-15 09:10:00', '2026-11-15 11:40:00', NULL,                  390000);
