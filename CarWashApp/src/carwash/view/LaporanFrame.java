@@ -10,6 +10,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.print.PrinterException;
+import carwash.util.LaporanPdf;
+import java.io.File;
 
 public class LaporanFrame extends JFrame {
 
@@ -105,6 +107,51 @@ public class LaporanFrame extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
             }
         });
+
+        tombolPDF.addActionListener(e -> {
+    try {
+        LocalDate awal = LocalDate.parse(tanggalAwal.getText());
+        LocalDate akhir = LocalDate.parse(tanggalAkhir.getText());
+
+        if (akhir.isBefore(awal)) {
+            JOptionPane.showMessageDialog(this,
+                    "Tanggal akhir tidak boleh sebelum tanggal awal.");
+            return;
+        }
+
+        List<Object[]> data = laporanDAO.dataLaporan(awal, akhir);
+
+        double total = laporanDAO.totalPendapatan(awal, akhir);
+
+        JFileChooser pilihFile = new JFileChooser();
+        pilihFile.setDialogTitle("Simpan Laporan Pendapatan PDF");
+        pilihFile.setSelectedFile(
+                new File("Laporan_Pendapatan_CarWash.pdf"));
+
+        int hasil = pilihFile.showSaveDialog(this);
+
+        if (hasil == JFileChooser.APPROVE_OPTION) {
+
+            File file = pilihFile.getSelectedFile();
+
+            if (!file.getName().toLowerCase().endsWith(".pdf")) {
+                file = new File(file.getAbsolutePath() + ".pdf");
+            }
+
+            LaporanPdf.simpan(data, awal, akhir, total, file);
+
+            JOptionPane.showMessageDialog(this,
+                    "Laporan PDF berhasil disimpan!");
+
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this,
+                "Gagal membuat PDF: " + ex.getMessage(),
+                "Kesalahan",
+                JOptionPane.ERROR_MESSAGE);
+    }
+});
 
         tombolKembali.addActionListener(e -> {
             new MenuUtama().setVisible(true);
